@@ -14,7 +14,7 @@ st.markdown("### Interactive Spring Design for Escapement Prototype")
 # ============ SYSTEM CONFIGURATION ============
 st.markdown("---")
 st.markdown("#### System Configuration")
-col1_sys, col2_sys, col3_sys = st.columns(3)
+col1_sys, col2_sys= st.columns(2)
 
 with col1_sys:
     gear_ratio = st.number_input(
@@ -26,6 +26,15 @@ with col1_sys:
         key="gear_ratio"
     )
 
+    friction_loss_pct = st.number_input(
+        "Estimated Friction Loss (%)",
+        value=25.0,
+        step=1.0,
+        min_value=0.0,
+        max_value=50.0,
+        key="friction_loss"
+    ) / 100.0
+
 with col2_sys:
     I_g_mm2 = st.number_input(
         "Balance Moment of Inertia (g·mm², from SolidWorks)",
@@ -33,7 +42,6 @@ with col2_sys:
         key="I"
     )
 
-with col3_sys:
     bal_mass = st.number_input(
         "Mass of Balance (g)",
         value=19.4,
@@ -119,7 +127,7 @@ st.markdown("#### Calculated Results")
 # Mainspring calculations
 kappa_m = (E * b_m * (t_m ** 3)) / (12 * L_m)
 tau_peak = kappa_m * 2 * math.pi * 1000  # mNm
-tau_avg = kappa_m * math.pi * 1000  # mNm
+tau_avg = (kappa_m * math.pi * 1000) * (1 - friction_loss_pct)  # mNm
 tau_balance = tau_avg * gear_ratio  # mNm
 
 # Hairspring calculations
