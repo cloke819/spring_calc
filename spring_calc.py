@@ -44,7 +44,7 @@ with col2_sys:
 
     bal_mass = st.number_input(
         "Mass of Balance (g)",
-        value=19.4,
+        value=13.23,
         key="bal_mass"
     )
 
