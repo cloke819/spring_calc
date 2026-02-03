@@ -31,7 +31,7 @@ with col1_sys:
         value=25.0,
         step=1.0,
         min_value=0.0,
-        max_value=50.0,
+        max_value=100.0,
         key="friction_loss"
     ) / 100.0
 
