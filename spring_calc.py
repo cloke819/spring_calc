@@ -138,6 +138,10 @@ f_hz = math.sqrt(kappa_hs / I_kg_m2) / (2 * math.pi)
 theta_rad = (tau_balance / 1000) / kappa_hs
 theta_deg = theta_rad * 180 / math.pi
 
+# Hairspring torque (based on amplitude)
+tau_hs_peak = kappa_hs * theta_rad  # N·m
+tau_hs_avg = tau_hs_peak / 2  # N·m
+
 # Hairspring mass
 vol_hs = h_hs * t_hs * L_hs
 mass_hs_g = vol_hs * DENSITY_STEEL * 1000
@@ -156,6 +160,7 @@ with col_result_2:
     st.markdown("#### Hairspring")
     st.metric("κ_hs (N·m/rad)", f"{kappa_hs:.6f}")
     st.metric("Natural Frequency (Hz)", f"{f_hz:.2f}")
+    st.metric("Avg Torque (mNm)", f"{tau_hs_avg * 1000:.2f}")
     st.metric("Mass (g)", f"{mass_hs_g:.2f}")
     
     # Check if mass is reasonable
@@ -247,6 +252,9 @@ with formula_expander:
     #### Balance Amplitude
     θ_max (rad) = τ_balance / κ_hs
     θ_max (deg) = θ_max (rad) × 180/π
+
+    #### Hairspring Avg Torque
+    τ_hs_avg = (κ_hs × θ_max) / 2
     
     #### Hairspring Mass
     mass = volume × density = (h_hs × t_hs × L_hs) × 7850 kg/m³
