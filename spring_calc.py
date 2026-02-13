@@ -138,8 +138,8 @@ f_hz = math.sqrt(kappa_hs / I_kg_m2) / (2 * math.pi)
 theta_rad = (tau_balance / 1000) / kappa_hs
 theta_deg = theta_rad * 180 / math.pi
 
-# Hairspring torque (based on amplitude)
-tau_hs_peak = kappa_hs * theta_rad  # N·m
+# Hairspring torque (average over pi rad)
+tau_hs_avg = kappa_hs * math.pi * 1000  # mNm
 
 # Hairspring mass
 vol_hs = h_hs * t_hs * L_hs
@@ -153,13 +153,13 @@ with col_result_1:
     st.metric("κ_m (N·m/rad)", f"{kappa_m:.6f}")
     st.metric("Peak Torque (mNm)", f"{tau_peak:.2f}")
     st.metric("Avg Torque (mNm)", f"{tau_avg:.2f}")
-    st.metric("Balance Torque (mNm)", f"{tau_balance:.2f}")
+    st.metric("Torque at Balance (mNm)", f"{tau_balance:.2f}")
 
 with col_result_2:
     st.markdown("#### Hairspring")
     st.metric("κ_hs (N·m/rad)", f"{kappa_hs:.6f}")
     st.metric("Natural Frequency (Hz)", f"{f_hz:.2f}")
-    st.metric("Max Torque (mNm)", f"{tau_hs_peak * 1000:.2f}")
+    st.metric("Avg Torque (mNm)", f"{tau_hs_avg:.2f}")
     st.metric("Mass (g)", f"{mass_hs_g:.2f}")
     
     # Check if mass is reasonable
@@ -252,8 +252,8 @@ with formula_expander:
     θ_max (rad) = τ_balance / κ_hs
     θ_max (deg) = θ_max (rad) × 180/π
 
-    #### Hairspring Max Torque
-    τ_hs_max = κ_hs × θ_max
+    #### Hairspring Average Torque (π rad)
+    τ_hs_avg = κ_hs × π × 1000
     
     #### Hairspring Mass
     mass = volume × density = (h_hs × t_hs × L_hs) × 7850 kg/m³
